@@ -1,14 +1,15 @@
-import { ChatBubbleOvalLeftIcon, HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { Gallery, Item } from "react-photoswipe-gallery";
 import 'photoswipe/dist/photoswipe.css';
-import { Post } from "@/types/blog";
-
+import { Post } from "@/types/post";
+import { Link } from "@inertiajs/react";
 
 export default function PostCard({ post }: {post: Post}) {
   const [liked, setLiked] = useState(post.is_liked ?? false);
   const [likes, setLikes] = useState(post.likes);
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState(post.comments || []);
+
 
   const toggleLike = () => {
     setLiked(!liked);
@@ -22,15 +23,20 @@ export default function PostCard({ post }: {post: Post}) {
   return (
     <div className="bg-white dark:bg-[#252728] shadow-sm rounded-xl p-4 transition-colors duration-300 mb-6">
       <div className="flex items-center gap-3 mb-3">
-        <img
-          src={post.author.avatar}
-          alt={post.author.name}
-          className="w-10 h-10 rounded-full object-cover"
-        />
+        <Link href={`profile/${post.author.username}`}>
+          <img
+            src={post.author.avatar}
+            alt={post.author.name}
+            className="w-10 h-10 rounded-full object-cover"
+          />
+        </Link>
         <div>
-          <p className="font-semibold text-gray-800 dark:text-gray-100">
+          <Link 
+            href={`profile/${post.author.username}`}
+            className="font-semibold text-gray-800 dark:text-gray-100 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+          >
             {post.author.name}
-          </p>
+          </Link>
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {new Date(post.created_at).toLocaleString()}
           </p>
@@ -132,28 +138,79 @@ export default function PostCard({ post }: {post: Post}) {
         </Gallery>
       )}
 
-      <div className="border-t dark:border-[#3a3a3a] mt-4 pt-3 flex justify-around text-gray-600 dark:text-gray-400 text-sm select-none">
+      <div className="border-t pt-2 flex text-gray-600 dark:text-gray-300 text-sm select-none">
+        <button className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg">
+          👍 {post.likes}
+        </button>
         <button
-          onClick={toggleLike}
-          className="flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+          onClick={() => setShowComments(!showComments)}
+          className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg"
         >
-          {liked ? (
-            <HeartSolid className="w-5 h-5 text-red-500" />
-          ) : (
-            <HeartIcon className="w-5 h-5" />
-          )}
-          <span>{likes}</span>
+          💬 {post.comments.length}
+        </button>
+        <button className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg">
+          🔗 Chia sẻ
+        </button>
+      </div>
+
+       {showComments && (
+        <div className="mt-3 space-y-3">
+          {post.comments.map((comment, index) => (
+            <CommentItem key={index} comment={comment} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+function CommentItem({ comment }) {
+  const [showReply, setShowReply] = useState(false);
+
+  return (
+    <div className="flex items-start gap-2">
+      <img src={comment.user.avatar} className="w-8 h-8 rounded-full" />
+      <div className="flex-1 bg-gray-100 dark:bg-[#2b2b2b] rounded-xl px-3 py-2">
+        <p className="text-sm font-semibold">{comment.user.name}</p>
+        <p className="text-sm">{comment.text}</p>
+        <button
+          onClick={() => setShowReply(!showReply)}
+          className="text-xs text-indigo-500 mt-1 hover:underline"
+        >
+          Trả lời
         </button>
 
-        <button className="flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
-          <ChatBubbleOvalLeftIcon className="w-5 h-5" />
-          <span>{post.comments}</span>
-        </button>
+        {showReply && (
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="mt-2 flex gap-2 items-center"
+          >
+            <input
+              placeholder="Viết phản hồi..."
+              className="flex-1 bg-white dark:bg-[#1e1e1e] text-sm rounded-full px-3 py-1 border dark:border-[#3a3a3a] outline-none"
+            />
+            <button className="text-indigo-500 text-sm">Gửi</button>
+          </form>
+        )}
 
-        <button className="flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
-          <ShareIcon className="w-5 h-5" />
-          <span>Chia sẻ</span>
-        </button>
+        {/* Replies */}
+        {comment.replies?.length > 0 && (
+          <div className="mt-2 ml-4 space-y-1">
+            {comment.replies.map((reply) => (
+              <div key={reply.id} className="flex items-start gap-2">
+                <img
+                  src={reply.user.avatar}
+                  className="w-7 h-7 rounded-full"
+                />
+                <div className="bg-gray-50 dark:bg-[#1e1e1e] rounded-xl px-3 py-1.5">
+                  <p className="text-sm font-semibold">{reply.user.name}</p>
+                  <p className="text-sm">{reply.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

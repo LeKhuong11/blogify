@@ -27,8 +27,42 @@ class HomeController extends Controller
                     'https://picsum.photos/seed/3/800/500',
                 ],
                 'likes' => 58,
-                'comments' => 14,
                 'created_at' => now()->subHours(2)->toDateTimeString(),
+                'comments' => [
+                    [
+                        'id' => 1,
+                        'user' => [
+                            'id' => 2,
+                            'name' => 'Jane Doe',
+                            'avatar' => 'https://i.pravatar.cc/150?img=8',
+                        ],
+                        'text' => 'Chúc mừng nhé! Dự án này nhìn chuyên nghiệp quá 👏',
+                        'created_at' => now()->subHour()->toDateTimeString(),
+                        'replies' => [
+                            [
+                                'id' => 11,
+                                'user' => [
+                                    'id' => 1,
+                                    'name' => 'Andy Cole',
+                                    'avatar' => 'https://i.pravatar.cc/150?img=3',
+                                ],
+                                'text' => 'Cảm ơn bạn nhiều nha 💪',
+                                'created_at' => now()->subMinutes(40)->toDateTimeString(),
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 2,
+                        'user' => [
+                            'id' => 3,
+                            'name' => 'Michael Nguyen',
+                            'avatar' => 'https://i.pravatar.cc/150?img=12',
+                        ],
+                        'text' => 'Mình cũng vừa học xong Laravel, có thể học hỏi thêm từ bạn không?',
+                        'created_at' => now()->subMinutes(20)->toDateTimeString(),
+                        'replies' => [],
+                    ],
+                ],
             ],
             [
                 'id' => 2,
@@ -44,24 +78,20 @@ class HomeController extends Controller
                     'https://picsum.photos/seed/5/800/500',
                 ],
                 'likes' => 91,
-                'comments' => 27,
                 'created_at' => now()->subDay()->toDateTimeString(),
-            ],
-            [
-                'id' => 3,
-                'author' => [
-                    'id' => 2,
-                    'username' => 'janedoe',
-                    'name' => 'Jane Doe',
-                    'avatar' => 'https://i.pravatar.cc/150?img=8'
+                'comments' => [
+                    [
+                        'id' => 3,
+                        'user' => [
+                            'id' => 4,
+                            'name' => 'Minh Anh',
+                            'avatar' => 'https://i.pravatar.cc/150?img=9',
+                        ],
+                        'text' => 'Ảnh đẹp quá, nhìn chill ghê 💚',
+                        'created_at' => now()->subHours(6)->toDateTimeString(),
+                        'replies' => [],
+                    ],
                 ],
-                'content' => 'Chia sẻ vài bức ảnh trong chuyến đi Đà Lạt 🌿',
-                'images' => [
-                    'https://picsum.photos/seed/5/800/500',
-                ],
-                'likes' => 91,
-                'comments' => 27,
-                'created_at' => now()->subDay()->toDateTimeString(),
             ],
         ];
 

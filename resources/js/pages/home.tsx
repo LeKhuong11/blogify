@@ -1,6 +1,6 @@
 import Header from "@/layouts/header";
 import PostCard from "@/components/post-card";
-import { Post } from "@/types/blog";
+import { Post } from "@/types/post";
 
 interface Props {
   posts: Post[];

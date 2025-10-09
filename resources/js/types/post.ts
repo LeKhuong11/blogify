@@ -11,6 +11,6 @@ export interface Post {
   images: string[];
   created_at: string;
   likes: number;
-  comments: number;
   is_liked?: boolean;
+  comments: string[]
 }

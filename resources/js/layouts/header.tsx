@@ -10,7 +10,7 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="w-full bg-white dark:bg-gray-900 shadow-sm transition-colors">
+    <header className="w-full fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-sm transition-colors">
       <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4">
         {/* Left: Logo */}
         <div className="flex items-center gap-2">
