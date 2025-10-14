@@ -9,61 +9,72 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
 
 export default function ForgotPassword({ status }: { status?: string }) {
-    return (
-        <AuthLayout
-            title="Forgot password"
-            description="Enter your email to receive a password reset link"
-        >
-            <Head title="Forgot password" />
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 transition-colors duration-300">
+      <Head title="Quên mật khẩu" />
 
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 space-y-6 transform transition-all duration-300 hover:shadow-xl">
+        <div className="text-center space-y-1">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+            Quên mật khẩu 🔑
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Nhập email của bạn để nhận liên kết đặt lại mật khẩu
+          </p>
+        </div>
 
-            <div className="space-y-6">
-                <Form {...PasswordResetLinkController.store.form()}>
-                    {({ processing, errors }) => (
-                        <>
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    autoComplete="off"
-                                    autoFocus
-                                    placeholder="email@example.com"
-                                />
+        {status && (
+          <div className="text-center text-sm font-medium text-green-600 dark:text-green-400">
+            {status}
+          </div>
+        )}
 
-                                <InputError message={errors.email} />
-                            </div>
+        <Form {...PasswordResetLinkController.store.form()}>
+          {({ processing, errors }) => (
+            <div className="space-y-5">
+              {/* Email field */}
+              <div className="space-y-2">
+                <Label htmlFor="email">Địa chỉ email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  autoFocus
+                  autoComplete="off"
+                  required
+                  placeholder="you@example.com"
+                  className="dark:bg-gray-700 dark:border-gray-600"
+                />
+                <InputError message={errors.email} />
+              </div>
 
-                            <div className="my-6 flex items-center justify-start">
-                                <Button
-                                    className="w-full"
-                                    disabled={processing}
-                                    data-test="email-password-reset-link-button"
-                                >
-                                    {processing && (
-                                        <LoaderCircle className="h-4 w-4 animate-spin" />
-                                    )}
-                                    Email password reset link
-                                </Button>
-                            </div>
-                        </>
-                    )}
-                </Form>
+              {/* Submit button */}
+              <Button
+                type="submit"
+                disabled={processing}
+                className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400 transition"
+                data-test="email-password-reset-link-button"
+              >
+                {processing ? (
+                  <LoaderCircle className="h-4 w-4 animate-spin" />
+                ) : (
+                  'Gửi liên kết đặt lại mật khẩu'
+                )}
+              </Button>
 
-                <div className="space-x-1 text-center text-sm text-muted-foreground">
-                    <span>Or, return to</span>
-                    <TextLink href={login()}>log in</TextLink>
-                </div>
+              {/* Back to login */}
+              <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+                Hoặc quay lại{' '}
+                <TextLink href={login()} className="text-indigo-600 dark:text-indigo-400">
+                  đăng nhập
+                </TextLink>
+              </div>
             </div>
-        </AuthLayout>
-    );
+          )}
+        </Form>
+      </div>
+    </div>
+  );
 }

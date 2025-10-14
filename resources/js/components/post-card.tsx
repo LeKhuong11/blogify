@@ -3,6 +3,7 @@ import { Gallery, Item } from "react-photoswipe-gallery";
 import 'photoswipe/dist/photoswipe.css';
 import { Post } from "@/types/post";
 import { Link } from "@inertiajs/react";
+import { Heart, MessageCircle, Link as LinkIcon } from "lucide-react";
 
 export default function PostCard({ post }: {post: Post}) {
   const [liked, setLiked] = useState(post.is_liked ?? false);
@@ -139,17 +140,26 @@ export default function PostCard({ post }: {post: Post}) {
       )}
 
       <div className="border-t pt-2 flex text-gray-600 dark:text-gray-300 text-sm select-none">
-        <button className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg">
-          👍 {post.likes}
+        <button className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg cursor-pointer">
+          <div className="flex items-center justify-center gap-1" onClick={toggleLike}>
+            <Heart size={17} color="red" /> 
+            <span>{post.likes}</span>
+          </div>
         </button>
         <button
           onClick={() => setShowComments(!showComments)}
-          className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg"
+          className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg cursor-pointer"
         >
-          💬 {post.comments.length}
+          <div className="flex items-center justify-center gap-1">
+            <MessageCircle size={17} color="#f5f5f5" /> 
+            <span>{post.comments.length}</span>
+          </div>
         </button>
-        <button className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg">
-          🔗 Chia sẻ
+        <button className="flex-1 hover:bg-gray-100 dark:hover:bg-[#323232] py-2 rounded-lg cursor-pointer">
+          <div className="flex items-center justify-center gap-1">
+            <LinkIcon size={17} color="#f5f5f5" />
+            <span> Chia sẻ</span>
+          </div>
         </button>
       </div>
 

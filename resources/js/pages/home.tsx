@@ -10,7 +10,7 @@ export default function Home({ posts }: Props) {
   return (
     <>
       <Header />
-      <div className="bg-gray-100 dark:bg-gray-800 min-h-screen py-6 transition-colors duration-300">
+      <div className="bg-gray-100 dark:bg-gray-800 min-h-screen py-6 transition-colors duration-300 mt-15">
         <div className="max-w-2xl mx-auto px-4 space-y-6">
           {posts.length > 0 ? (
             posts.map((post) => <PostCard key={post.id} post={post} />)
