@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { register } from '@/routes';
 import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, Link } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 interface LoginProps {
@@ -22,7 +22,12 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 space-y-6 transform transition-all duration-300 hover:shadow-xl">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+          <Link href="/" className="text-center gap-2">
+            <span className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+              Blogify
+            </span>
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-3">
             Chào mừng trở lại 👋
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">

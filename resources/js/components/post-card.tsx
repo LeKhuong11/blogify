@@ -4,6 +4,7 @@ import 'photoswipe/dist/photoswipe.css';
 import { Post } from "@/types/post";
 import { Link } from "@inertiajs/react";
 import { Heart, MessageCircle, Link as LinkIcon } from "lucide-react";
+import { profile } from "@/routes";
 
 export default function PostCard({ post }: {post: Post}) {
   const [liked, setLiked] = useState(post.is_liked ?? false);
@@ -24,7 +25,7 @@ export default function PostCard({ post }: {post: Post}) {
   return (
     <div className="bg-white dark:bg-[#252728] shadow-sm rounded-xl p-4 transition-colors duration-300 mb-6">
       <div className="flex items-center gap-3 mb-3">
-        <Link href={`profile/${post.author.username}`}>
+        <Link href={profile(post.author.username)} className="flex-shrink-0">
           <img
             src={post.author.avatar}
             alt={post.author.name}
