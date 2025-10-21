@@ -14,14 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::firstOrCreate(
+        User::updateOrCreate(
             ['email' => '11lekhuong@gmail.com'],
             [
-                'name' => 'Adminr',
+                'name' => 'Khuong',
+                'username' => 'khuongledev',
                 'password' => Hash::make('123456'),
-                'email_verified_at' => now(),
+                'display_name' => 'Khuong',
+                'status' => 'active',
+                'is_private' => false,
+                'bio' => 'This is the administrator account.',
             ]
         );
     }
